@@ -1,0 +1,11 @@
+<widget xmlns="urn:enonic:xp:model:1.0">
+  <display-name>Editorial Activity</display-name>
+  <interfaces>
+    <interface>admin.dashboard</interface>
+  </interfaces>
+  <config>
+    <property name="width" value="small"/>
+    <property name="height" value="small"/>
+    <property name="order" value="2"/>
+  </config>
+</widget>

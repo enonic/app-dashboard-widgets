@@ -1,0 +1,8 @@
+#widget-youtube {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+}
+
+#widget-youtube .widget-header {
+  display: none;
+}

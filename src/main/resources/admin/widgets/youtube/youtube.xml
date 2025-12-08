@@ -1,0 +1,12 @@
+<widget xmlns="urn:enonic:xp:model:1.0">
+  <display-name></display-name>
+  <interfaces>
+    <interface>admin.dashboard2</interface>
+  </interfaces>
+  <config>
+    <property name="width" value="full"/>
+    <property name="height" value="full"/>
+    <property name="order" value="100"/>
+    <property name="style" value="custom"/>
+  </config>
+</widget>

@@ -1,0 +1,52 @@
+{
+  "dependencies": {
+    "chart.js": "^4.5.1"
+  },
+  "devDependencies": {
+    "@enonic-types/core": "^7.15.1",
+    "@enonic-types/global": "^7.15.1",
+    "@enonic-types/lib-admin": "^7.15.1",
+    "@enonic-types/lib-asset": "^1.0.3",
+    "@enonic-types/lib-auth": "^7.15.1",
+    "@enonic-types/lib-cluster": "^7.15.1",
+    "@enonic-types/lib-common": "^7.15.1",
+    "@enonic-types/lib-content": "^7.15.1",
+    "@enonic-types/lib-context": "^7.15.1",
+    "@enonic-types/lib-event": "^7.15.1",
+    "@enonic-types/lib-export": "^7.15.1",
+    "@enonic-types/lib-i18n": "^7.15.1",
+    "@enonic-types/lib-io": "^7.15.1",
+    "@enonic-types/lib-mail": "^7.15.1",
+    "@enonic-types/lib-node": "^7.15.1",
+    "@enonic-types/lib-portal": "^7.15.1",
+    "@enonic-types/lib-project": "^7.15.1",
+    "@enonic-types/lib-repo": "^7.15.1",
+    "@enonic-types/lib-scheduler": "^7.15.1",
+    "@enonic-types/lib-task": "^7.15.1",
+    "@enonic-types/lib-value": "^7.15.1",
+    "@enonic-types/lib-websocket": "^7.15.1",
+    "@eslint/js": "^9.27.0",
+    "@swc/core": "^1.11.24",
+    "@types/node": "^22.15.19",
+    "concurrently": "^9.1.2",
+    "eslint": "^9.27.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "ts-jest": "^29.3.4",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.32.1"
+  },
+  "private": true,
+  "scripts": {
+    "build": "concurrently -c auto -g --timings npm:build:*",
+    "build:assets": "node tsup/build.js src/main/resources/assets build/resources/main/assets",
+    "build:server": "node tsup/build.js src/main/resources build/resources/main",
+    "check": "concurrently -c auto -g --timings npm:check:types npm:lint",
+    "check:types": "concurrently --kill-others-on-fail -g -r --timings npm:check:types:*",
+    "check:types:assets": "node tsup/check.js src/main/resources/assets",
+    "check:types:server": "node tsup/check.js src/main/resources src/main/resources/assets",
+    "cov": "jest --no-cache --coverage",
+    "lint": "eslint --cache",
+    "test": "jest --no-cache"
+  }
+}
