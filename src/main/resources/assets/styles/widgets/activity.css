@@ -1,3 +1,13 @@
 #widget-activity .widget-activity-chart-container {
   height: 80%;
 }
+
+#home-main-container .widget-panel .widget-placeholder:not(.style-custom) .widget-contents {
+  background-color: #2d2b2c;
+  border-radius: 10px;
+  opacity: 0.8;
+}
+
+#home-main-container .widget-panel .widget-placeholder:not(.style-custom) .widget-contents .widget-header {
+  color: #bbb;
+}

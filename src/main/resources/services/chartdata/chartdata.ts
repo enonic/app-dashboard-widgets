@@ -115,8 +115,6 @@ export function get() {
   const projects = getProjects();
   const activityMap = getStatsFromAllRepos(projects);
 
-  log.info(JSON.stringify(activityMap));
-
   return {
     contentType: 'application/json',
     body: activityMap

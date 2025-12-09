@@ -3,22 +3,33 @@ const issueFetcher = __.newBean('com.app.ntnu.issues.IssueFetcher') as IssueFetc
 import {list} from '/lib/xp/project';
 import {run} from '/lib/xp/context';
 
-interface IssueFetcher {
-// eslint-disable-next-line
-  list(count: number, principalKey: string | null): any[];
+interface Issue {
+  id: string;
+  modifiedTime: unknown;
+  modifier?: string;
+  title: string;
+  issueType: string;
 }
 
-export function getIssuesInRepo (repositoryId: string, count: number, principalKey: string) {
+interface IssuesResult {
+  getIssues(): Issue[];
+}
+
+interface IssueFetcher {
+  list(count: number, principalKey: string | null): IssuesResult;
+}
+
+export function getIssuesInRepo (repositoryId: string, count: number, principalKey: string): IssuesResult {
   return run(
     {
       repository: repositoryId,
       branch: 'draft'
     },
-    () => issueFetcher.list(count || -1, principalKey || null)
+    () => issueFetcher.list(count || -1, /*principalKey || */null)
   );
 }
 
-export function getProjects() {
+export function getProjects(): ReturnType<typeof list> {
   const projects = list();
   const hideDefaultProject = app.config['settings.hideDefaultProject'] === 'true' || false;
 
@@ -29,7 +40,7 @@ export function getProjects() {
   return projects;
 }
 
-export function parseDateTime(value) {
+export function parseDateTime(value: string | null | undefined): string | Date {
   if (!value) {
     return '';
   }
@@ -38,7 +49,7 @@ export function parseDateTime(value) {
 }
 
 // Copied from DateHelper.ts
-const makeDateFromUTCString = (value) => {
+const makeDateFromUTCString = (value: string): Date => {
   const parsedYear = Number(value.substring(0, 4));
   const parsedMonth = Number(value.substring(5, 7));
   const parsedDayOfMonth = Number(value.substring(8, 10));
@@ -49,7 +60,7 @@ const makeDateFromUTCString = (value) => {
   return new Date(Date.UTC(parsedYear, parsedMonth - 1, parsedDayOfMonth, parsedHours, parsedMinutes, parsedSeconds));
 }
 
-export function formatDateTime(date) {
+export function formatDateTime(date: Date | null | undefined): string {
   if (!date) {
     return '';
   }
@@ -68,7 +79,7 @@ export function formatDateTime(date) {
 }
 
 // Copied from DateTimeFormatter.ts
-const zeroPad = (n, width) => {
+const zeroPad = (n: number, width: number): string => {
   const nWidth = n.toString().length;
   if (nWidth >= width) {
     return '' + n;
