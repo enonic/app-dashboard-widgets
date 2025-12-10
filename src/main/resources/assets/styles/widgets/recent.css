@@ -1,7 +1,11 @@
+#widget-recent {
+  margin-top: 10px;
+}
+
 .recent-container {
   display: grid;
   grid-template-columns: 60%  minmax(50px, 1fr);
-  row-gap: 10px;
+  row-gap: 15px;
   column-gap: 5px;
 }
 
@@ -50,7 +54,7 @@
 
 .grid-item.content .content__link .content__namepath .content__path {
   font-size: 12px;
-  color: #777;
+  color: #bbb;
 }
 
 .grid-item.modified {

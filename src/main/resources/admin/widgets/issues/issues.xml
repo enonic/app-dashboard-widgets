@@ -4,7 +4,7 @@
     <interface>admin.dashboard</interface>
   </interfaces>
   <config>
-    <property name="width" value="medium"/>
+    <property name="width" value="small"/>
     <property name="height" value="small"/>
     <property name="order" value="100"/>
   </config>

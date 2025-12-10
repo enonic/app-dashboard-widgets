@@ -3,22 +3,13 @@
   <div class="issues-container">
     {{#issues}}
     <div class="issue">
-      <a class="issue__link" href="{{issueUrl}}" target="_blank">
-        <div class="issue__view">
-          <div class="issue__iconblock">
-            <img class="issue__img" src="{{imgUrl}}">
-          </div>
-          <div class="issue__data">
-            <div class="issue__name">{{name}}</div>
-            <div class="issue__modified">{{modifiedText}}</div>
-          </div>
+        <div class="issue__iconblock">
+          <img class="issue__img" src="{{imgUrl}}">
         </div>
-      </a>
-    </div>
-    <div class="project__name">
-      <a class="issue__link" href="{{projectUrl}}" target="_blank">
-        {{projectDisplayName}}
-      </a>
+        <div class="issue__data">
+          <div class="issue__name"><a class="issue__link" href="{{issueUrl}}" target="_blank">{{name}}</a></div>
+          <div class="issue__modified">{{modifiedText}} in <a class="issue__link project__name" href="{{projectUrl}}" target="_blank">{{projectDisplayName}}</a></div>
+        </div>
     </div>
     {{/issues}}
     {{^issues}}
