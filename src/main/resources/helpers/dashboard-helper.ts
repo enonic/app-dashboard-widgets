@@ -19,7 +19,7 @@ interface IssueFetcher {
   list(count: number, principalKey: string | null): IssuesResult;
 }
 
-export function getIssuesInRepo (repositoryId: string, count: number, principalKey: string): IssuesResult {
+export function getIssuesInRepo (repositoryId: string, count: number, _principalKey: string): IssuesResult {
   return run(
     {
       repository: repositoryId,
@@ -40,9 +40,9 @@ export function getProjects(): ReturnType<typeof list> {
   return projects;
 }
 
-export function parseDateTime(value: string | null | undefined): string | Date {
+export function parseDateTime(value: string | undefined): Date | undefined {
   if (!value) {
-    return '';
+    return;
   }
 
   return makeDateFromUTCString(value);
@@ -60,7 +60,7 @@ const makeDateFromUTCString = (value: string): Date => {
   return new Date(Date.UTC(parsedYear, parsedMonth - 1, parsedDayOfMonth, parsedHours, parsedMinutes, parsedSeconds));
 }
 
-export function formatDateTime(date: Date | null | undefined): string {
+export function formatDateTime(date: Date | undefined): string {
   if (!date) {
     return '';
   }
@@ -92,8 +92,4 @@ const zeroPad = (n: number, width: number): string => {
 
   return s + n;
 }
-/*
-exports.parseDateTime = parseDateTime;
-exports.formatDateTime = formatDateTime;
-exports.getIssuesInRepo = getIssuesInRepo;
-*/
+

@@ -3,9 +3,8 @@
 }
 
 #home-main-container .widget-panel .widget-placeholder:not(.style-custom) .widget-contents {
-  background-color: #2d2b2c;
+  background-color: #42373d;
   border-radius: 10px;
-  opacity: 0.8;
 }
 
 #home-main-container .widget-panel .widget-placeholder:not(.style-custom) .widget-contents .widget-header {

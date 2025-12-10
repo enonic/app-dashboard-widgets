@@ -1,5 +1,5 @@
 <widget xmlns="urn:enonic:xp:model:1.0">
-  <display-name>Open Issues</display-name>
+  <display-name>Recently changed</display-name>
   <interfaces>
     <interface>admin.dashboard</interface>
   </interfaces>

@@ -65,7 +65,7 @@ dependencies {
   include 'com.enonic.lib:lib-asset:1.0.3'
 
   // https://market.enonic.com/vendors/enonic/text-encoding
-  // include 'com.enonic.lib:lib-text-encoding:2.1.1'
+  include 'com.enonic.lib:lib-text-encoding:2.1.1'
 
   // https://market.enonic.com/vendors/enonic/thymeleaf-lib
   // include "com.enonic.lib:lib-thymeleaf:2.1.0"

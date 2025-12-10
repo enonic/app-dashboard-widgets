@@ -38,7 +38,7 @@
 }
 
 .issues-container .issue .issue__link .issue__view .issue__data .issue__name {
-  font-size: 12px;
+  font-size: 14px;
   overflow: hidden;
   white-space: pre;
   text-overflow: ellipsis;
@@ -46,7 +46,7 @@
 }
 
 .issues-container .issue .issue__link .issue__view .issue__data .issue__modified {
-  font-size: 10px;
+  font-size: 12px;
   color: #777;
   overflow: hidden;
   white-space: pre;

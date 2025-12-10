@@ -31,7 +31,8 @@
     // to the baseUrl if set, or to the tsconfig file itself otherwise.
     "lib": ["es2015", "dom"],
     "paths": {
-      "/lib/mustache": ["./node_modules/@item-enonic-types/lib-mustache"],
+      "/lib/mustache": ["../../../node_modules/@item-enonic-types/lib-mustache"],
+      "/lib/text-encoding": ["../../../node_modules/@item-enonic-types/lib-text-encoding"],
       "/lib/xp/*": ["../../../node_modules/@enonic-types/lib-*"],
       "/lib/enonic/asset": ["../../../node_modules/@enonic-types/lib-asset"],
       "/*": ["./*"],

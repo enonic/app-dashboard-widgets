@@ -1,4 +1,3 @@
-// @ts-expect-error No types
 import {render} from '/lib/mustache';
 import {assetUrl} from '/lib/enonic/asset';
 import {serviceUrl} from '/lib/xp/portal';
