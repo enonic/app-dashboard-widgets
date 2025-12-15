@@ -1,4 +1,4 @@
-const issueFetcher = __.newBean('com.app.ntnu.issues.IssueFetcher') as IssueFetcher;
+const issueFetcher = __.newBean('com.enonic.app.issues.IssueFetcher') as IssueFetcher;
 
 import {list} from '/lib/xp/project';
 import {run} from '/lib/xp/context';

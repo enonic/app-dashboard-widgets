@@ -5,7 +5,7 @@
   </interfaces>
   <config>
     <property name="width" value="small"/>
-    <property name="height" value="small"/>
-    <property name="order" value="100"/>
+    <property name="height" value="medium"/>
+    <property name="order" value="101"/>
   </config>
 </widget>

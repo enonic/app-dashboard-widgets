@@ -10,3 +10,7 @@
 #home-main-container .widget-panel .widget-placeholder:not(.style-custom) .widget-contents .widget-header {
   color: #bbb;
 }
+
+#home-main-container .widget-panel {
+  grid-auto-flow: row;
+}

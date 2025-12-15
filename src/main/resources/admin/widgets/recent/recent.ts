@@ -2,14 +2,13 @@ import {render} from '/lib/mustache';
 import {base64Encode} from '/lib/text-encoding';
 import {assetUrl} from '/lib/enonic/asset';
 import {getToolUrl} from '/lib/xp/admin';
-import {getUser} from '/lib/xp/auth';
+import {getUser, User} from '/lib/xp/auth';
 import {query, getType} from '/lib/xp/content';
 import {run} from '/lib/xp/context';
 import {getProjects, parseDateTime, formatDateTime} from '/helpers/dashboard-helper';
 import {Request} from '@enonic-types/core';
 
 const baseToolUri = getToolUrl('com.enonic.app.contentstudio', 'main');
-const currentUser = getUser();
 
 export function get (req: Request) {
   const showLast = req.params.showLast || 5;
@@ -35,10 +34,10 @@ export function get (req: Request) {
 const getLastModifiedContentInAllRepos = (showLast) => {
   const result = [];
   const projects = getProjects();
+  const currentUser: User | null = getUser();
 
   projects.forEach((project) => {
-    const projectItems = getLastModifiedItemsInRepo(`com.enonic.cms.${project.id}`, showLast);
-
+    const projectItems = getLastModifiedItemsInRepo(`com.enonic.cms.${project.id}`, showLast, currentUser);
     projectItems.forEach((item) => {
       result.push(createContentItem(item, project));
     });
@@ -47,24 +46,24 @@ const getLastModifiedContentInAllRepos = (showLast) => {
   return result;
 }
 
-const getLastModifiedItemsInRepo = (repositoryId, count) => {
+const getLastModifiedItemsInRepo = (repositoryId, count, user) => {
   return run(
     {
       repository: repositoryId,
       branch: 'draft'
     },
     () => {
-      return getLastModifiedItems(count);
+      return getLastModifiedItems(count, user);
     }
   );
 }
 
-const getLastModifiedItems = (count) => {
+const getLastModifiedItems = (count, user) => {
   return query({
     start: 0,
     count: count,
     sort: 'modifiedTime DESC',
-    query: `modifier = "${currentUser.key}"`
+    query: `modifier = "${user.key}"`
   }).hits;
 }
 
@@ -134,7 +133,7 @@ const filterSameItemsInOtherRepos = (items) => {
   const result = [];
 
   items.forEach((item) => {
-    if (item.project.parent) {
+    if (item.project.parent && item.item.inherit?.indexOf('DATA') > -1) {
       const itemId = item._id;
       const parentProjectName = item.project.parent;
       const hasSameItemInParentLayer = items.some((i) => i._id === itemId && i.project.id === parentProjectName);

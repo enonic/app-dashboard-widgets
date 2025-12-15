@@ -29,9 +29,10 @@ export function get(req: Request) {
 const getLastModifiedIssues = (showLast) => {
   const result = [];
   const projects = getProjects();
+  const currentUser = getUser();
 
   projects.forEach((project) => {
-    const findIssuesResult = getIssuesInRepo(`com.enonic.cms.${project.id}`, showLast, getUser()['key']);
+    const findIssuesResult = getIssuesInRepo(`com.enonic.cms.${project.id}`, showLast, currentUser['key']);
 
     findIssuesResult.getIssues().forEach((issue) => {
       result.push(createIssueItem(issue, project));
@@ -73,7 +74,11 @@ const generateProjectUrl = (project) => {
 const generateModifiedText = (issue, modifiedDate) => {
   const action = issue.modifier ? 'Updated' : 'Opened';
   const text = getModifiedString(modifiedDate);
-  return `${action} by me ${text}`;
+  const currentUser = getUser();
+  const issueUser = issue.modifier ? issue.modifier : issue.creator;
+
+  const user = (issueUser == currentUser['key']) ? ' by me' : '';
+  return `${action}${user} ${text}`;
 }
 
 // copied from DateHelper.ts

@@ -1,4 +1,4 @@
-package com.app.ntnu.issues;
+package com.enonic.app.issues;
 
 import com.enonic.xp.context.ContextAccessor;
 import com.enonic.xp.issue.FindIssuesResult;
