@@ -1,0 +1,8 @@
+displayName: "Editorial Activity"
+interfaces:
+- "admin.dashboard"
+config:
+  width: "small"
+  height: "small"
+  order: "2"
+  style: "custom"

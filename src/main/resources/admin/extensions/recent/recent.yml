@@ -1,0 +1,8 @@
+displayName: "Recently changed"
+interfaces:
+- "admin.dashboard"
+config:
+  width: "medium"
+  height: "medium"
+  order: "100"
+  style: "custom"

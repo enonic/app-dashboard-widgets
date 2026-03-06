@@ -1,0 +1,8 @@
+displayName: "Open Issues"
+interfaces:
+- "admin.dashboard"
+config:
+  width: "small"
+  height: "medium"
+  order: "101"
+  style: "custom"

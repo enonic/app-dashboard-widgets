@@ -1,0 +1,7 @@
+interfaces:
+- "admin.dashboard2"
+config:
+  width: "full"
+  style: "custom"
+  height: "full"
+  order: "100"

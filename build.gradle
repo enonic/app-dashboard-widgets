@@ -1,6 +1,6 @@
 plugins {
   id 'java'
-  id 'com.enonic.xp.app' version '3.6.1'
+  id 'com.enonic.xp.app' version '4.0.0-A2'
   id 'com.github.node-gradle.node' version '7.1.0'
 }
 
@@ -12,9 +12,16 @@ app {
   systemVersion = "${xpVersion}"
 }
 
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(25)
+  }
+}
+
 dependencies {
   implementation "com.enonic.xp:core-api:${xpVersion}"
   implementation "com.enonic.xp:admin-api:${xpVersion}"
+  implementation "com.enonic.xp:script-api:${xpVersion}"
   // ─────────────────────────────────────────────────────────────────────────
   // https://repo.enonic.com/service/rest/repository/browse/public/com/enonic/xp/
   // ─────────────────────────────────────────────────────────────────────────
@@ -62,19 +69,21 @@ dependencies {
 
   // https://market.enonic.com/vendors/enonic/static-asset-lib
   // include 'com.enonic.lib:lib-static:1.0.3'
-  include 'com.enonic.lib:lib-asset:1.0.3'
+  include 'com.enonic.lib:lib-asset:2.0.0-SNAPSHOT'
 
   // https://market.enonic.com/vendors/enonic/text-encoding
   include 'com.enonic.lib:lib-text-encoding:2.1.1'
 
   // https://market.enonic.com/vendors/enonic/thymeleaf-lib
   // include "com.enonic.lib:lib-thymeleaf:2.1.0"
+
+  testImplementation "com.enonic.xp:testing:${xpVersion}"
 }
 
 repositories {
   mavenLocal()
   mavenCentral()
-  xp.enonicRepo()
+  xp.enonicRepo('dev')
 }
 
 node {
@@ -86,7 +95,7 @@ node {
 
   // Version of node to download and install (only used if download is true)
   // It will be unpacked in the workDir
-  version = '22.15.1'
+  version = '24.13.1'
 }
 
 processResources {
@@ -94,14 +103,6 @@ processResources {
   exclude '**/*.json'
 	exclude '**/*.ts'
 	exclude '**/*.tsx'
-}
-
-tasks.register('dev', Exec) {
-  if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
-    commandLine 'cmd', '/c', 'gradlew.bat', 'deploy', '-t'
-  } else {
-    commandLine './gradlew', 'deploy', '-t'
-  }
 }
 
 tasks.register('npmBuild', NpmTask) {
