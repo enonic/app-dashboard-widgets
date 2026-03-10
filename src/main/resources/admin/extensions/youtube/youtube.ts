@@ -7,7 +7,7 @@ export function get() {
 
     const params = {
         stylesUrl: assetUrl({
-          path: 'styles/widgets/youtube.css'
+          path: 'styles/extensions/youtube.css'
         }),
         videos: videos.map((video) => {
           return {

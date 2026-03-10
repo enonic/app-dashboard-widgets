@@ -16,7 +16,7 @@ export function get(req: Request) {
   const params = {
     issues: sortedByDateIssues.slice(0, showLast),
     stylesUri: assetUrl({
-      path: 'styles/widgets/issues.css'
+      path: 'styles/extensions/issues.css'
     })
   };
 
@@ -146,7 +146,7 @@ const generateImgUrl = (issue) => {
   const type = issue.issueType == 'STANDARD' ? 'issue' : 'publish';
 
   return assetUrl({
-    path: `styles/widgets/icons/${type}.svg`
+    path: `styles/extensions/icons/${type}.svg`
   });
 }
 

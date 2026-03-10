@@ -7,10 +7,10 @@ export function get() {
 
   const params = {
     jsUri: assetUrl({
-      path: 'js/widgets/activity.mjs'
+      path: 'js/extensions/activity.mjs'
     }),
     stylesUri: assetUrl({
-      path: 'styles/widgets/activity.css'
+      path: 'styles/extensions/activity.css'
     }),
     chartDataServiceUrl: serviceUrl({service: 'chartdata'})
   };

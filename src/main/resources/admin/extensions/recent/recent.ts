@@ -19,7 +19,7 @@ export function get (req: Request) {
   const params = {
     items: sortedByDateItems.slice(0, showLast),
     stylesUri: assetUrl({
-      path: 'styles/widgets/recent.css'
+      path: 'styles/extensions/recent.css'
     }),
   };
 

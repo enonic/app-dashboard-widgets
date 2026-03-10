@@ -11,7 +11,7 @@ Chart.register([
 const drawGraph = (activityDataObj: Record<string, number>) => {
   const activity = formatData(activityDataObj);
 // set the dimensions and margins of the graph
-  new Chart('widget-activity-chart', {
+  new Chart('extension-activity-chart', {
     type: 'line',
     data: {
       labels: activity.labels,
@@ -48,11 +48,17 @@ const drawGraph = (activityDataObj: Record<string, number>) => {
           display: true,
           grid: {
             display: false
+          },
+          ticks: {
+            color: '#ffffff'
           }
         },
         x: {
           grid: {
             display: false
+          },
+          ticks: {
+            color: '#ffffff'
           }
         }
       },
@@ -93,7 +99,20 @@ const formatData = (activityData: Record<string, number>) => {
 
   fetch(chartDataServiceUrl)
     .then((response) => response.json())
-    .then((activityDataObj: Record<string, number>) => drawGraph(activityDataObj))
+    .then((activityDataObj: Record<string, number>) => {
+      const existing = document.getElementById('extension-activity-chart');
+      if (existing) {
+        drawGraph(activityDataObj);
+        return;
+      }
+      const observer = new MutationObserver(() => {
+        if (document.getElementById('extension-activity-chart')) {
+          observer.disconnect();
+          drawGraph(activityDataObj);
+        }
+      });
+      observer.observe(document.body, {childList: true, subtree: true});
+    })
     .catch((e) => {
       console.error(e);
     });
