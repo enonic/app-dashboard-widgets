@@ -8,10 +8,9 @@ Chart.register([
   PointElement
 ]);
 
-const drawGraph = (activityDataObj: Record<string, number>) => {
+const drawGraph = (canvas: HTMLCanvasElement, activityDataObj: Record<string, number>) => {
   const activity = formatData(activityDataObj);
-// set the dimensions and margins of the graph
-  new Chart('extension-activity-chart', {
+  new Chart(canvas, {
     type: 'line',
     data: {
       labels: activity.labels,
@@ -84,37 +83,29 @@ const formatData = (activityData: Record<string, number>) => {
   };
 };
 
-(() => {
-  const scriptElement = document.querySelector(`script[src*="activity.mjs"]`);
+class ActivityChart extends HTMLElement {
+  connectedCallback() {
+    const chartDataServiceUrl = this.getAttribute('data-chart-service-url');
 
-  if (!scriptElement) {
-    return;
-  }
+    if (!chartDataServiceUrl) {
+      return;
+    }
 
-  const chartDataServiceUrl = scriptElement.getAttribute('data-chart-service-url');
+    const canvas = this.querySelector<HTMLCanvasElement>('canvas');
 
-  if (!chartDataServiceUrl) {
-    return;
-  }
+    if (!canvas) {
+      return;
+    }
 
-  fetch(chartDataServiceUrl)
-    .then((response) => response.json())
-    .then((activityDataObj: Record<string, number>) => {
-      const existing = document.getElementById('extension-activity-chart');
-      if (existing) {
-        drawGraph(activityDataObj);
-        return;
-      }
-      const observer = new MutationObserver(() => {
-        if (document.getElementById('extension-activity-chart')) {
-          observer.disconnect();
-          drawGraph(activityDataObj);
-        }
+    fetch(chartDataServiceUrl)
+      .then((response) => response.json())
+      .then((activityDataObj: Record<string, number>) => drawGraph(canvas, activityDataObj))
+      .catch((e) => {
+        console.error(e);
       });
-      observer.observe(document.body, {childList: true, subtree: true});
-    })
-    .catch((e) => {
-      console.error(e);
-    });
+  }
+}
 
-})();
+if (!customElements.get('activity-chart')) {
+  customElements.define('activity-chart', ActivityChart);
+}

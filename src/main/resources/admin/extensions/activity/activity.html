@@ -1,9 +1,11 @@
-<div>
+<div id="extension-activity">
   <link rel="stylesheet" href="{{stylesUri}}" type="text/css" media="all"/>
-  <script type="module" src="{{jsUri}}" data-chart-service-url="{{chartDataServiceUrl}}"></script>
+  <script type="module" src="{{jsUri}}"></script>
 
-  <div class="extension-activity-chart-container">
-    <canvas id="extension-activity-chart"></canvas>
-  </div>
+  <activity-chart data-chart-service-url="{{chartDataServiceUrl}}">
+    <div class="extension-activity-chart-container">
+      <canvas id="extension-activity-chart"></canvas>
+    </div>
+  </activity-chart>
 
 </div>
