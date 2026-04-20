@@ -4,7 +4,7 @@
     {{#items}}
     <div class="grid-item content">
       <a class="content__link" href="{{editUrl}}" target="_blank">
-        {{#icon}}<img class="content__icon" src="data:{{icon.iconMimeType}};base64, {{icon.iconBase64}}">{{/icon}}
+        {{#icon}}<span class="content__icon" style="--content-icon-url: url('data:{{icon.iconMimeType}};base64,{{icon.iconBase64}}')"></span>{{/icon}}
         <div class="content__namepath">
           <span class="content__name cell-overflow">{{displayName}}</span>
           <span class="content__path cell-overflow">{{item._path}}</span>

@@ -8,8 +8,14 @@ Chart.register([
   PointElement
 ]);
 
+const resolveVar = (canvas: HTMLCanvasElement, name: string, fallback: string): string => {
+  const value = getComputedStyle(canvas).getPropertyValue(name).trim();
+  return value || fallback;
+};
+
 const drawGraph = (canvas: HTMLCanvasElement, activityDataObj: Record<string, number>) => {
   const activity = formatData(activityDataObj);
+  const tickColor = resolveVar(canvas, '--dashboard-text-primary', '#ffffff');
   new Chart(canvas, {
     type: 'line',
     data: {
@@ -49,7 +55,7 @@ const drawGraph = (canvas: HTMLCanvasElement, activityDataObj: Record<string, nu
             display: false
           },
           ticks: {
-            color: '#ffffff'
+            color: tickColor
           }
         },
         x: {
@@ -57,7 +63,7 @@ const drawGraph = (canvas: HTMLCanvasElement, activityDataObj: Record<string, nu
             display: false
           },
           ticks: {
-            color: '#ffffff'
+            color: tickColor
           }
         }
       },

@@ -1,3 +1,5 @@
+kind: "AdminExtension"
+title: "YouTube"
 interfaces:
 - "admin.dashboard2"
 config:

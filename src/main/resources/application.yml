@@ -1,1 +1,3 @@
-description: "Edit app description at src/main/resources/application.xml"
+kind: "Application"
+title: "Dashboard Widgets"
+description: "Sample widgets for Enonic XP Dashboard"

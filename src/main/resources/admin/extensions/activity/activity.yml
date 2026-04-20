@@ -1,8 +1,8 @@
-displayName: "Editorial Activity"
+kind: "AdminExtension"
+title: "Editorial Activity"
 interfaces:
 - "admin.dashboard"
 config:
   width: "small"
   height: "small"
-  order: "2"
-  style: "custom"
+  order: 2

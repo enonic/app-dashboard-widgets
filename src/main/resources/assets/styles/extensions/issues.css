@@ -12,9 +12,18 @@
 }
 
 .issues-container .issue .issue__iconblock .issue__img {
+  display: inline-block;
   width: 22px;
   height: 22px;
-  filter: brightness(0) invert(1);
+  background-color: var(--dashboard-text-primary);
+  mask-image: var(--issue-img-url);
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-image: var(--issue-img-url);
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
 }
 
 .issues-container .issue .issue__data {
@@ -38,22 +47,22 @@
 }
 
 .issues-container .issue .issue__name .issue__link {
-  color: #fff;
+  color: var(--dashboard-text-primary);
 }
 
 .issues-container .issue .issue__modified {
   font-size: 12px;
-  color: #bbb;
+  color: var(--dashboard-text-secondary);
   overflow: hidden;
   white-space: pre;
   text-overflow: ellipsis;
 }
 
 .issues-container .issue .issue__modified .issue__link {
-  color: #fff;
+  color: var(--dashboard-text-primary);
 }
 
 .issues-container .no-items {
   display: flex;
-  color: #bbb;
+  color: var(--dashboard-text-secondary);
 }

@@ -1,8 +1,8 @@
-displayName: "Recently changed"
+kind: "AdminExtension"
+title: "Recently changed"
 interfaces:
 - "admin.dashboard"
 config:
   width: "medium"
   height: "medium"
-  order: "100"
-  style: "custom"
+  order: 4
