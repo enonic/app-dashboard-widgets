@@ -1,37 +1,38 @@
 import {render} from '/lib/mustache';
 import {base64Encode} from '/lib/text-encoding';
-import {assetUrl} from '/lib/enonic/asset';
 import {getToolUrl} from '/lib/xp/admin';
 import {getUser, User} from '/lib/xp/auth';
 import {query, getType} from '/lib/xp/content';
 import {run} from '/lib/xp/context';
 import {getProjects, parseDateTime, formatDateTime} from '/helpers/dashboard-helper';
+import {handleRequest} from '/helpers/static-helper';
 import {Request} from '@enonic-types/core';
 
 const baseToolUri = getToolUrl('com.enonic.app.contentstudio', 'main');
 
 export function get (req: Request) {
-  const showLast = req.params.showLast || 5;
-  const lastModifiedItems = getLastModifiedContentInAllRepos(showLast);
-  const filteredItems = filterSameItemsInOtherRepos(lastModifiedItems);
-  const sortedByDateItems = sortItemsByDate(filteredItems);
+  return handleRequest(req, (staticBaseUrl: string) => {
+    const requestedShowLast = Number(req.params.showLast);
+    const showLast = isFinite(requestedShowLast) ? Math.max(1, requestedShowLast) : 5;
+    const lastModifiedItems = getLastModifiedContentInAllRepos(showLast);
+    const filteredItems = filterSameItemsInOtherRepos(lastModifiedItems);
+    const sortedByDateItems = sortItemsByDate(filteredItems);
 
-  const params = {
-    items: sortedByDateItems.slice(0, showLast),
-    stylesUri: assetUrl({
-      path: 'styles/extensions/recent.css'
-    }),
-  };
+    const params = {
+      items: sortedByDateItems.slice(0, showLast),
+      stylesUri: `${staticBaseUrl}/styles/widgets/recent.css`,
+    };
 
-  const view = resolve('./recent.html');
+    const view = resolve('./recent.html');
 
-  return {
-    contentType: 'text/html',
-    body: render(view, params),
-  };
+    return {
+      contentType: 'text/html',
+      body: render(view, params),
+    };
+  });
 }
 
-const getLastModifiedContentInAllRepos = (showLast) => {
+const getLastModifiedContentInAllRepos = (showLast: number) => {
   const result = [];
   const projects = getProjects();
   const currentUser: User | null = getUser();
@@ -46,7 +47,7 @@ const getLastModifiedContentInAllRepos = (showLast) => {
   return result;
 }
 
-const getLastModifiedItemsInRepo = (repositoryId, count, user) => {
+const getLastModifiedItemsInRepo = (repositoryId: string, count: number, user: User) => {
   return run(
     {
       repository: repositoryId,
@@ -58,7 +59,7 @@ const getLastModifiedItemsInRepo = (repositoryId, count, user) => {
   );
 }
 
-const getLastModifiedItems = (count, user) => {
+const getLastModifiedItems = (count: number, user: User) => {
   return query({
     start: 0,
     count: count,

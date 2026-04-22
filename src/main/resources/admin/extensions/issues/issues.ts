@@ -1,32 +1,33 @@
 import {render} from '/lib/mustache';
-import {assetUrl} from '/lib/enonic/asset';
 import {getToolUrl} from '/lib/xp/admin';
+import {handleRequest} from '/helpers/static-helper';
 import {getUser} from '/lib/xp/auth';
-import {getProjects, getIssuesInRepo, parseDateTime} from '/helpers/dashboard-helper';
+import {getProjects, getIssuesInRepo, parseDateTime, type Issue} from '/helpers/dashboard-helper';
 import {Request} from '@enonic-types/core';
 
 const baseToolUri = getToolUrl('com.enonic.app.contentstudio', 'main');
 
 export function get(req: Request) {
-  const showLast = req.params.showLast || 5;
-  const view = resolve('./issues.html');
-  const issues = getLastModifiedIssues(showLast);
-  const sortedByDateIssues = sortIssuesByDate(issues);
+  return handleRequest(req, (staticBaseUrl) => {
+    const requestedShowLast = Number(req.params.showLast);
+    const showLast = isFinite(requestedShowLast) ? Math.max(1, requestedShowLast) : 5;
+    const view = resolve('./issues.html');
+    const issues = getLastModifiedIssues(showLast, staticBaseUrl);
+    const sortedByDateIssues = sortIssuesByDate(issues);
 
-  const params = {
-    issues: sortedByDateIssues.slice(0, showLast),
-    stylesUri: assetUrl({
-      path: 'styles/extensions/issues.css'
-    })
-  };
+    const params = {
+      issues: sortedByDateIssues.slice(0, showLast),
+      stylesUri: `${staticBaseUrl}/styles/widgets/issues.css`
+    };
 
-  return {
-    contentType: 'text/html',
-    body: render(view, params),
-  };
+    return {
+      contentType: 'text/html',
+      body: render(view, params),
+    };
+  });
 }
 
-const getLastModifiedIssues = (showLast) => {
+const getLastModifiedIssues = (showLast: number, staticBaseUrl: string) => {
   const result = [];
   const projects = getProjects();
   const currentUser = getUser();
@@ -35,20 +36,20 @@ const getLastModifiedIssues = (showLast) => {
     const findIssuesResult = getIssuesInRepo(`com.enonic.cms.${project.id}`, showLast, currentUser['key']);
 
     findIssuesResult.getIssues().forEach((issue) => {
-      result.push(createIssueItem(issue, project));
+      result.push(createIssueItem(issue, project, staticBaseUrl));
     });
   });
 
   return result;
 }
 
-const createIssueItem = (issue, project) => {
+const createIssueItem = (issue: Issue, project, staticBaseUrl: string) => {
   const modifiedDateTime = parseDateTime(issue.modifiedTime.toString());
   const modifiedText = generateModifiedText(issue, modifiedDateTime);
   const issueUrl = generateIssueUrl(issue.id, project.id);
   const projectUrl = generateProjectUrl(project.id);
   const name = generateNameWithId(issue);
-  const imgUrl = generateImgUrl(issue);
+  const imgUrl = generateImgUrl(issue, staticBaseUrl);
   const projectDisplayName = project.displayName;
 
   return {
@@ -63,15 +64,15 @@ const createIssueItem = (issue, project) => {
   }
 }
 
-const generateIssueUrl = (id, project) => {
+const generateIssueUrl = (id: string, project: string) => {
   return `${baseToolUri}#/${project}/issue/${id}`;
 }
 
-const generateProjectUrl = (project) => {
+const generateProjectUrl = (project: string) => {
   return `${baseToolUri}#/${project}/browse`;
 }
 
-const generateModifiedText = (issue, modifiedDate) => {
+const generateModifiedText = (issue: Issue, modifiedDate: Date) => {
   const action = issue.modifier ? 'Updated' : 'Opened';
   const text = getModifiedString(modifiedDate);
   const currentUser = getUser();
@@ -82,7 +83,7 @@ const generateModifiedText = (issue, modifiedDate) => {
 }
 
 // copied from DateHelper.ts
-const getModifiedString = (modified) => {
+const getModifiedString = (modified: Date) => {
   const timeDiff = Math.abs(Date.now() - modified.getTime());
   const secInMs = 1000;
   const minInMs = secInMs * 60;
@@ -142,12 +143,10 @@ const generateNameWithId = (issue) => {
   return issue.title;
 }
 
-const generateImgUrl = (issue) => {
+const generateImgUrl = (issue, staticBaseUrl: string) => {
   const type = issue.issueType == 'STANDARD' ? 'issue' : 'publish';
 
-  return assetUrl({
-    path: `styles/extensions/icons/${type}.svg`
-  });
+  return `${staticBaseUrl}/styles/widgets/icons/${type}.svg`;
 }
 
 const sortIssuesByDate = (items) => {

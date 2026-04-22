@@ -1,22 +1,21 @@
 import {render} from '/lib/mustache';
-import {assetUrl} from '/lib/enonic/asset';
 import {serviceUrl} from '/lib/xp/portal';
+import {Request} from '@enonic-types/core';
+import {handleRequest} from '/helpers/static-helper';
 
-export function get() {
-  const view = resolve('./activity.html');
+export function get(req: Request) {
+  return handleRequest(req, (staticBaseUrl) => {
+    const view = resolve('./activity.html');
 
-  const params = {
-    jsUri: assetUrl({
-      path: 'js/extensions/activity.mjs'
-    }),
-    stylesUri: assetUrl({
-      path: 'styles/extensions/activity.css'
-    }),
-    chartDataServiceUrl: serviceUrl({service: 'chartdata'})
-  };
+    const params = {
+      jsUri: `${staticBaseUrl}/js/widgets/activity.mjs`,
+      stylesUri: `${staticBaseUrl}/styles/widgets/activity.css`,
+      chartDataServiceUrl: serviceUrl({service: 'chartdata'})
+    };
 
-  return {
-    contentType: 'text/html',
-    body: render(view, params)
-  };
+    return {
+      contentType: 'text/html',
+      body: render(view, params)
+    };
+  });
 }
