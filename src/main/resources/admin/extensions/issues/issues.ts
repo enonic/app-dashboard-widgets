@@ -7,15 +7,15 @@ import {Request} from '@enonic-types/core';
 
 const baseToolUri = getToolUrl('com.enonic.app.contentstudio', 'main');
 
-const router = createWidgetRouter((req: Request, staticBaseUrl: string) => {
-  const requestedShowLast = Number(req.params.showLast);
-  const showLast = isFinite(requestedShowLast) ? Math.max(1, requestedShowLast) : 5;
+const SHOW_LAST = 5;
+
+const router = createWidgetRouter((staticBaseUrl: string) => {
   const view = resolve('./issues.html');
-  const issues = getLastModifiedIssues(showLast, staticBaseUrl);
+  const issues = getLastModifiedIssues(SHOW_LAST, staticBaseUrl);
   const sortedByDateIssues = sortIssuesByDate(issues);
 
   const params = {
-    issues: sortedByDateIssues.slice(0, showLast),
+    issues: sortedByDateIssues.slice(0, SHOW_LAST),
     stylesUri: `${staticBaseUrl}/styles/widgets/issues.css`
   };
 

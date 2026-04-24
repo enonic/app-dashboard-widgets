@@ -22,9 +22,7 @@ const formatDate = (date) => {
 
 const getFormattedDateXDaysAgo = (days) => {
   const dateXDaysAgo = getDateXDaysAgo(days);
-  const formatted = formatDate(dateXDaysAgo);
-
-  return formatted;
+  return formatDate(dateXDaysAgo);
 }
 
 const dateFilterValue = getFormattedDateXDaysAgo(daysAgo);
@@ -111,12 +109,7 @@ const fetchByDayStats = () => {
   return result.aggregations.by_day.buckets;
 }
 
-export function get() {
+export function getChartData(): Record<string, number> {
   const projects = getProjects();
-  const activityMap = getStatsFromAllRepos(projects);
-
-  return {
-    contentType: 'application/json',
-    body: activityMap
-  };
+  return getStatsFromAllRepos(projects);
 }

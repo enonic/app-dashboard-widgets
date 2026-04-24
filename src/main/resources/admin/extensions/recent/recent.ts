@@ -10,15 +10,15 @@ import {Request} from '@enonic-types/core';
 
 const baseToolUri = getToolUrl('com.enonic.app.contentstudio', 'main');
 
-const router = createWidgetRouter((req: Request, staticBaseUrl: string) => {
-  const requestedShowLast = Number(req.params.showLast);
-  const showLast = isFinite(requestedShowLast) ? Math.max(1, requestedShowLast) : 5;
-  const lastModifiedItems = getLastModifiedContentInAllRepos(showLast);
+const SHOW_LAST = 10;
+
+const router = createWidgetRouter((staticBaseUrl: string) => {
+  const lastModifiedItems = getLastModifiedContentInAllRepos(SHOW_LAST);
   const filteredItems = filterSameItemsInOtherRepos(lastModifiedItems);
   const sortedByDateItems = sortItemsByDate(filteredItems);
 
   const params = {
-    items: sortedByDateItems.slice(0, showLast),
+    items: sortedByDateItems.slice(0, SHOW_LAST),
     stylesUri: `${staticBaseUrl}/styles/widgets/recent.css`,
   };
 

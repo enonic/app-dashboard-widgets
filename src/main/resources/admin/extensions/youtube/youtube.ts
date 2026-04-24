@@ -2,7 +2,7 @@ import {render} from '/lib/mustache';
 import {Request} from '@enonic-types/core';
 import {createWidgetRouter} from '/helpers/static-helper';
 
-const router = createWidgetRouter((_req: Request, staticBaseUrl: string) => {
+const router = createWidgetRouter((staticBaseUrl: string) => {
     const view = resolve('./youtube.html');
     const videos = (app.config['youtube.videos'] || '').split(',') || [];
 

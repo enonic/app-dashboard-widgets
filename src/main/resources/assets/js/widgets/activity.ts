@@ -91,9 +91,9 @@ const formatData = (activityData: Record<string, number>) => {
 
 class ActivityChart extends HTMLElement {
   connectedCallback() {
-    const chartDataServiceUrl = this.getAttribute('data-chart-service-url');
+    const chartDataUrl = this.getAttribute('data-chart-data-url');
 
-    if (!chartDataServiceUrl) {
+    if (!chartDataUrl) {
       return;
     }
 
@@ -103,7 +103,7 @@ class ActivityChart extends HTMLElement {
       return;
     }
 
-    fetch(chartDataServiceUrl)
+    fetch(chartDataUrl)
       .then((response) => response.json())
       .then((activityDataObj: Record<string, number>) => drawGraph(canvas, activityDataObj))
       .catch((e) => {
