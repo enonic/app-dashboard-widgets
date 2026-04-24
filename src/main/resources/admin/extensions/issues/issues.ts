@@ -1,31 +1,31 @@
 import {render} from '/lib/mustache';
 import {getToolUrl} from '/lib/xp/admin';
-import {handleRequest} from '/helpers/static-helper';
+import {createWidgetRouter} from '/helpers/static-helper';
 import {getUser} from '/lib/xp/auth';
 import {getProjects, getIssuesInRepo, parseDateTime, type Issue} from '/helpers/dashboard-helper';
 import {Request} from '@enonic-types/core';
 
 const baseToolUri = getToolUrl('com.enonic.app.contentstudio', 'main');
 
-export function get(req: Request) {
-  return handleRequest(req, (staticBaseUrl) => {
-    const requestedShowLast = Number(req.params.showLast);
-    const showLast = isFinite(requestedShowLast) ? Math.max(1, requestedShowLast) : 5;
-    const view = resolve('./issues.html');
-    const issues = getLastModifiedIssues(showLast, staticBaseUrl);
-    const sortedByDateIssues = sortIssuesByDate(issues);
+const router = createWidgetRouter((req: Request, staticBaseUrl: string) => {
+  const requestedShowLast = Number(req.params.showLast);
+  const showLast = isFinite(requestedShowLast) ? Math.max(1, requestedShowLast) : 5;
+  const view = resolve('./issues.html');
+  const issues = getLastModifiedIssues(showLast, staticBaseUrl);
+  const sortedByDateIssues = sortIssuesByDate(issues);
 
-    const params = {
-      issues: sortedByDateIssues.slice(0, showLast),
-      stylesUri: `${staticBaseUrl}/styles/widgets/issues.css`
-    };
+  const params = {
+    issues: sortedByDateIssues.slice(0, showLast),
+    stylesUri: `${staticBaseUrl}/styles/widgets/issues.css`
+  };
 
-    return {
-      contentType: 'text/html',
-      body: render(view, params),
-    };
-  });
-}
+  return {
+    contentType: 'text/html',
+    body: render(view, params),
+  };
+});
+
+export const all = (req: Request) => router.dispatch(req);
 
 const getLastModifiedIssues = (showLast: number, staticBaseUrl: string) => {
   const result = [];

@@ -1,25 +1,23 @@
-import {requestHandler, RESPONSE_CACHE_CONTROL} from '/lib/enonic/static';
-import {Request} from '@enonic-types/core';
+import {mappedRelativePath, requestHandler, RESPONSE_CACHE_CONTROL} from '/lib/enonic/static';
+import Router from '/lib/router';
+import {Request, Response} from '@enonic-types/core';
 
-const STATIC_BASE = '_static';
-const STATIC_MARKER = `/${STATIC_BASE}/`;
-const STATIC_ASSETS_REGEXP = new RegExp(`${STATIC_MARKER}.+$`);
+const BASE_PATH = '';
+const STATIC_BASE_PATH = `${BASE_PATH}/_static`;
 
-function serveStatic(req: Request) {
-  return requestHandler(req, {
-    cacheControl: () => RESPONSE_CACHE_CONTROL.SAFE,
-    relativePath: (r: Request) => {
-      const idx = r.rawPath.indexOf(STATIC_MARKER);
-      return idx >= 0 ? r.rawPath.substring(idx + STATIC_MARKER.length - 1) : '';
-    },
-    root: 'assets',
-    index: false,
-  });
-}
+export type WidgetRenderer = (req: Request, staticBaseUrl: string) => Response;
 
-export function handleRequest<T>(req: Request, renderer: (staticBaseUrl: string) => T): T | ReturnType<typeof serveStatic> {
-  if (STATIC_ASSETS_REGEXP.test(req.rawPath)) {
-    return serveStatic(req);
-  }
-  return renderer(`${req.rawPath}/${STATIC_BASE}`);
+export function createWidgetRouter(renderer: WidgetRenderer) {
+    const router = Router();
+
+    router.get(BASE_PATH, (req: Request) => renderer(req, `${req.path}${STATIC_BASE_PATH}`));
+
+    router.get(`${STATIC_BASE_PATH}/{path:.*}`, (req: Request) => requestHandler(req, {
+        cacheControl: () => RESPONSE_CACHE_CONTROL.SAFE,
+        index: false,
+        root: '/assets',
+        relativePath: mappedRelativePath(STATIC_BASE_PATH),
+    }));
+
+    return router;
 }

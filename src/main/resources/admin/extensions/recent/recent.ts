@@ -5,32 +5,32 @@ import {getUser, User} from '/lib/xp/auth';
 import {query, getType} from '/lib/xp/content';
 import {run} from '/lib/xp/context';
 import {getProjects, parseDateTime, formatDateTime} from '/helpers/dashboard-helper';
-import {handleRequest} from '/helpers/static-helper';
+import {createWidgetRouter} from '/helpers/static-helper';
 import {Request} from '@enonic-types/core';
 
 const baseToolUri = getToolUrl('com.enonic.app.contentstudio', 'main');
 
-export function get (req: Request) {
-  return handleRequest(req, (staticBaseUrl: string) => {
-    const requestedShowLast = Number(req.params.showLast);
-    const showLast = isFinite(requestedShowLast) ? Math.max(1, requestedShowLast) : 5;
-    const lastModifiedItems = getLastModifiedContentInAllRepos(showLast);
-    const filteredItems = filterSameItemsInOtherRepos(lastModifiedItems);
-    const sortedByDateItems = sortItemsByDate(filteredItems);
+const router = createWidgetRouter((req: Request, staticBaseUrl: string) => {
+  const requestedShowLast = Number(req.params.showLast);
+  const showLast = isFinite(requestedShowLast) ? Math.max(1, requestedShowLast) : 5;
+  const lastModifiedItems = getLastModifiedContentInAllRepos(showLast);
+  const filteredItems = filterSameItemsInOtherRepos(lastModifiedItems);
+  const sortedByDateItems = sortItemsByDate(filteredItems);
 
-    const params = {
-      items: sortedByDateItems.slice(0, showLast),
-      stylesUri: `${staticBaseUrl}/styles/widgets/recent.css`,
-    };
+  const params = {
+    items: sortedByDateItems.slice(0, showLast),
+    stylesUri: `${staticBaseUrl}/styles/widgets/recent.css`,
+  };
 
-    const view = resolve('./recent.html');
+  const view = resolve('./recent.html');
 
-    return {
-      contentType: 'text/html',
-      body: render(view, params),
-    };
-  });
-}
+  return {
+    contentType: 'text/html',
+    body: render(view, params),
+  };
+});
+
+export const all = (req: Request) => router.dispatch(req);
 
 const getLastModifiedContentInAllRepos = (showLast: number) => {
   const result = [];

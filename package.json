@@ -26,6 +26,7 @@
     "@enonic-types/lib-value": "^7.16.2",
     "@enonic-types/lib-websocket": "^7.16.2",
     "@item-enonic-types/lib-mustache": "^2.1.0",
+    "@item-enonic-types/lib-router": "^3.1.0",
     "@item-enonic-types/lib-text-encoding": "^2.1.0",
     "@eslint/js": "^10.0.1",
     "@swc/core": "^1.15.30",
