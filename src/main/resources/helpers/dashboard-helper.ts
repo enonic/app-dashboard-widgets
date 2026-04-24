@@ -3,12 +3,13 @@ const issueFetcher = __.newBean('com.enonic.app.issues.IssueFetcher') as IssueFe
 import {list} from '/lib/xp/project';
 import {run} from '/lib/xp/context';
 
-interface Issue {
+export interface Issue {
   id: string;
   modifiedTime: unknown;
   modifier?: string;
   title: string;
   issueType: string;
+  creator: string;
 }
 
 interface IssuesResult {

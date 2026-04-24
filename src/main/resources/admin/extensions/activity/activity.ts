@@ -1,22 +1,28 @@
 import {render} from '/lib/mustache';
-import {assetUrl} from '/lib/enonic/asset';
-import {serviceUrl} from '/lib/xp/portal';
+import {Request} from '@enonic-types/core';
+import {createWidgetRouter} from '/helpers/static-helper';
+import {getChartData} from '/helpers/chart-data';
 
-export function get() {
-  const view = resolve('./activity.html');
+const CHART_DATA_PATH = '/_chart-data';
 
-  const params = {
-    jsUri: assetUrl({
-      path: 'js/extensions/activity.mjs'
-    }),
-    stylesUri: assetUrl({
-      path: 'styles/extensions/activity.css'
-    }),
-    chartDataServiceUrl: serviceUrl({service: 'chartdata'})
-  };
+const router = createWidgetRouter((staticBaseUrl: string, req: Request) => {
+    const view = resolve('./activity.html');
 
-  return {
-    contentType: 'text/html',
-    body: render(view, params)
-  };
-}
+    const params = {
+        jsUri: `${staticBaseUrl}/js/widgets/activity.mjs`,
+        stylesUri: `${staticBaseUrl}/styles/widgets/activity.css`,
+        chartDataUrl: `${req.contextPath}${CHART_DATA_PATH}`
+    };
+
+    return {
+        contentType: 'text/html',
+        body: render(view, params)
+    };
+});
+
+router.get(CHART_DATA_PATH, () => ({
+    contentType: 'application/json',
+    body: getChartData()
+}));
+
+export const all = (req: Request) => router.dispatch(req);

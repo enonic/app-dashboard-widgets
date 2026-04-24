@@ -1,14 +1,13 @@
 import {render} from '/lib/mustache';
-import {assetUrl} from '/lib/enonic/asset';
+import {Request} from '@enonic-types/core';
+import {createWidgetRouter} from '/helpers/static-helper';
 
-export function get() {
+const router = createWidgetRouter((staticBaseUrl: string) => {
     const view = resolve('./youtube.html');
     const videos = (app.config['youtube.videos'] || '').split(',') || [];
 
     const params = {
-        stylesUrl: assetUrl({
-          path: 'styles/extensions/youtube.css'
-        }),
+        stylesUrl: `${staticBaseUrl}/styles/widgets/youtube.css`,
         videos: videos.map((video) => {
           return {
             videoId: video
@@ -20,4 +19,6 @@ export function get() {
         contentType: 'text/html',
         body: render(view, params)
     };
-}
+});
+
+export const all = (req: Request) => router.dispatch(req);

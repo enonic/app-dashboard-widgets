@@ -32,9 +32,10 @@
     "lib": ["es2015", "dom"],
     "paths": {
       "/lib/mustache": ["../../../node_modules/@item-enonic-types/lib-mustache"],
+      "/lib/router": ["../../../node_modules/@item-enonic-types/lib-router"],
       "/lib/text-encoding": ["../../../node_modules/@item-enonic-types/lib-text-encoding"],
       "/lib/xp/*": ["../../../node_modules/@enonic-types/lib-*"],
-      "/lib/enonic/asset": ["../../../node_modules/@enonic-types/lib-asset"],
+      "/lib/enonic/static": ["../../../node_modules/@enonic-types/lib-static"],
       "/*": ["./*"],
     },
 
