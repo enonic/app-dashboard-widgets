@@ -57,19 +57,19 @@ dependencies {
   // https://repo.enonic.com/service/rest/repository/browse/public/com/enonic/lib/
 
   // https://market.enonic.com/vendors/enonic/cache-lib
-  // include 'com.enonic.lib:lib-cache:2.2.0'
+  // include 'com.enonic.lib:lib-cache:3.0.0-SNAPSHOT'
 
   // https://market.enonic.com/vendors/enonic/http-client-lib
-  // include 'com.enonic.lib:lib-http-client:3.2.2'
+  // include 'com.enonic.lib:lib-http-client:4.0.0-SNAPSHOT'
 
   // https://market.enonic.com/vendors/enonic/mustache-lib
   include 'com.enonic.lib:lib-mustache:2.1.1'
 
   // https://market.enonic.com/vendors/enonic/router-lib
-  include 'com.enonic.lib:lib-router:3.2.0'
+  include 'com.enonic.lib:lib-router:4.0.0-SNAPSHOT'
 
   // https://market.enonic.com/vendors/enonic/static-asset-lib
-  include 'com.enonic.lib:lib-static:2.1.1'
+  include 'com.enonic.lib:lib-static:3.0.0-SNAPSHOT'
 
   // https://market.enonic.com/vendors/enonic/text-encoding
   include 'com.enonic.lib:lib-text-encoding:2.1.1'
