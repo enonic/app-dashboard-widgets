@@ -66,10 +66,10 @@ dependencies {
   include 'com.enonic.lib:lib-mustache:2.1.1'
 
   // https://market.enonic.com/vendors/enonic/router-lib
-  include 'com.enonic.lib:lib-router:3.2.0'
+  include 'com.enonic.lib:lib-router:4.0.0-SNAPSHOT'
 
   // https://market.enonic.com/vendors/enonic/static-asset-lib
-  include 'com.enonic.lib:lib-static:2.1.1'
+  include 'com.enonic.lib:lib-static:3.0.0-SNAPSHOT'
 
   // https://market.enonic.com/vendors/enonic/text-encoding
   include 'com.enonic.lib:lib-text-encoding:2.1.1'
