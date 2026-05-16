@@ -63,16 +63,16 @@ dependencies {
   // include 'com.enonic.lib:lib-http-client:3.2.2'
 
   // https://market.enonic.com/vendors/enonic/mustache-lib
-  include 'com.enonic.lib:lib-mustache:2.1.1'
+  include libs.lib.mustache
 
   // https://market.enonic.com/vendors/enonic/router-lib
-  include 'com.enonic.lib:lib-router:4.0.0-SNAPSHOT'
+  include libs.lib.router
 
   // https://market.enonic.com/vendors/enonic/static-asset-lib
-  include 'com.enonic.lib:lib-static:3.0.0-SNAPSHOT'
+  include libs.lib.static
 
   // https://market.enonic.com/vendors/enonic/text-encoding
-  include 'com.enonic.lib:lib-text-encoding:2.1.1'
+  include libs.lib.text.encoding
 
   // https://market.enonic.com/vendors/enonic/thymeleaf-lib
   // include "com.enonic.lib:lib-thymeleaf:2.1.0"
