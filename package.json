@@ -24,7 +24,7 @@
     "@enonic-types/lib-static": "^2.1.1",
     "@enonic-types/lib-task": "^8.0.0-B4",
     "@enonic-types/lib-value": "^8.0.0-B5",
-    "@enonic-types/lib-websocket": "^8.0.0-B4",
+    "@enonic-types/lib-websocket": "^8.0.0-RC2",
     "@item-enonic-types/lib-mustache": "^2.1.0",
     "@item-enonic-types/lib-router": "^3.1.0",
     "@item-enonic-types/lib-text-encoding": "^2.1.0",
